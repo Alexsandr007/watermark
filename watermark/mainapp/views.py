@@ -17,12 +17,19 @@ def add_watermark(image_path, watermark_text):
     font = ImageFont.truetype("arial.ttf", font_size)  # Убедитесь, что шрифт доступен
     draw = ImageDraw.Draw(txt)
 
-    # Определяем размер текста и его позицию
+    # Определяем размер текста
     text_width, text_height = draw.textsize(watermark_text, font=font)
-    position = (original.width - text_width - 10, original.height - text_height - 10)  # Позиция в правом нижнем углу
 
-    # Накладываем текст на изображение
-    draw.text(position, watermark_text, fill=(255, 255, 255, 128), font=font)  # Полупрозрачный белый текст
+    # Накладываем текст на изображение в нескольких местах
+    y = 0
+    while y < original.height:
+        x = 0
+        while x < original.width:
+            # Позиция для каждого водяного знака
+            position = (x, y)
+            draw.text(position, watermark_text, fill=(255, 255, 255, 128), font=font)  # Полупрозрачный белый текст
+            x += text_width + 20  # Переход к следующему водяному знаку по горизонтали
+        y += text_height + 20  # Переход к следующему ряду водяных знаков
 
     # Объединяем оригинальное изображение с текстом
     watermarked = Image.alpha_composite(original, txt)
@@ -35,6 +42,8 @@ def add_watermark(image_path, watermark_text):
     watermarked.save(watermarked_path, format='JPEG')  # Сохраняем в формате JPEG
 
     return watermarked_path
+
+
 
 def home(request):
     uploaded_image = None  # для передачи в шаблон

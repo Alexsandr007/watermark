@@ -4,25 +4,103 @@
     <meta charset="UTF-8"/>
     <title>Загрузка картинки</title>
     <style>
-      body { font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; }
-      h1 { color: #333; }
-      form { margin-bottom: 20px; }
-      img { max-width: 300px; max-height: 300px; border: 1px solid #ccc; padding: 5px; background: white; }
-      button { padding: 8px 15px; background: #007BFF; color: white; border: none; border-radius: 4px; cursor: pointer; }
-      button:hover { background: #0056b3; }
+        body {
+            font-family: Arial, sans-serif;
+            padding: 20px;
+            background: #f9f9f9;
+            color: #333;
+        }
+        h1 {
+            text-align: center;
+            color: #007BFF;
+        }
+        .container {
+            max-width: 600px;
+            margin: 0 auto;
+            background: white;
+            border-radius: 8px;
+            box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+            padding: 20px;
+        }
+        form {
+            margin-bottom: 20px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+        }
+        input[type="file"] {
+            display: block;
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
+        button {
+            padding: 10px 15px;
+            background: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background 0.3s;
+            width: 100%;
+        }
+        .download-btn 
+        { 
+            padding: 10px 15px; 
+            background: #007BFF; 
+            color: white; 
+            border: none; 
+            border-radius: 4px; 
+            cursor: pointer; 
+            transition: background 0.3s; 
+            width: 100%; text-align: center; 
+            text-decoration: none; 
+            display: inline-block; 
+            font-size: 16px; 
+            margin-top: 10px; 
+        } 
+        button:hover, .download-btn:hover 
+        { 
+            background: #0056b3; 
+        }
+        img {
+            max-width: 100%;
+            height: auto;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+            margin-top: 20px;
+        }
+        .result {
+            text-align: center;
+            margin-top: 20px;
+        }
     </style>
 </head>
 <body>
-    <h1>Загрузить картинку</h1>
-    <form method="post" enctype="multipart/form-data">
-        {% csrf_token %}
-        {{ form.as_p }}
-        <button type="submit">Загрузить</button>
-    </form>
+    <div class="container">
+        <h1>Загрузить картинку</h1>
+        <form method="post" enctype="multipart/form-data">
+            {% csrf_token %}
+            <div class="form-group">
+                {{ form.as_p }}
+            </div>
+            <button type="submit">Загрузить</button>
+        </form>
 
-    {% if uploaded_image %}
-    <h2>Загруженное изображение с водяным знаком:</h2>
-    <img src="/media/{{ uploaded_image }}" alt="Uploaded Image with Watermark"/>
-    {% endif %}
+            {% if uploaded_image %}
+            <div class="result">
+                <h2>Загруженное изображение с водяным знаком:</h2>
+                <img src="/media/{{ uploaded_image }}" alt="Uploaded Image with Watermark"/>
+                <a href="/media/{{ uploaded_image }}" download class="download-btn">Скачать изображение</a>
+            </div>
+            {% endif %}
+        </div>
+    </div>
 </body>
 </html>
