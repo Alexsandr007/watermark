@@ -3,6 +3,14 @@
 <head>
     <meta charset="UTF-8"/>
     <title>Загрузка картинки</title>
+    <style>
+      body { font-family: Arial, sans-serif; padding: 20px; background: #f9f9f9; }
+      h1 { color: #333; }
+      form { margin-bottom: 20px; }
+      img { max-width: 300px; max-height: 300px; border: 1px solid #ccc; padding: 5px; background: white; }
+      button { padding: 8px 15px; background: #007BFF; color: white; border: none; border-radius: 4px; cursor: pointer; }
+      button:hover { background: #0056b3; }
+    </style>
 </head>
 <body>
     <h1>Загрузить картинку</h1>
@@ -11,5 +19,12 @@
         {{ form.as_p }}
         <button type="submit">Загрузить</button>
     </form>
+&nbsp;
+&nbsp;
+
+    {% if uploaded_image %}
+    <h2>Загруженное изображение:</h2>
+    <img src="{{ uploaded_image }}" alt="Uploaded Image"/>
+    {% endif %}
 </body>
 </html>
