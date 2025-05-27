@@ -19,12 +19,10 @@
         {{ form.as_p }}
         <button type="submit">Загрузить</button>
     </form>
-&nbsp;
-&nbsp;
 
     {% if uploaded_image %}
-    <h2>Загруженное изображение:</h2>
-    <img src="{{ uploaded_image }}" alt="Uploaded Image"/>
+    <h2>Загруженное изображение с водяным знаком:</h2>
+    <img src="/media/{{ uploaded_image }}" alt="Uploaded Image with Watermark"/>
     {% endif %}
 </body>
 </html>
