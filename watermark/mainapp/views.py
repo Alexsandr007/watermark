@@ -5,7 +5,7 @@ import os
 from django.conf import settings
 
 
-def add_watermark(image_path, watermark_text):
+def add_watermark(image_path, watermark_text, font):
     # Открываем изображение
     original = Image.open(image_path).convert("RGBA")  # Конвертируем в RGBA
 
@@ -13,7 +13,7 @@ def add_watermark(image_path, watermark_text):
     txt = Image.new('RGBA', original.size, (255, 255, 255, 0))
 
     # Настраиваем шрифт и размер
-    font_size = int(original.height / 20)  # размер шрифта зависит от высоты изображения
+    font_size = int(original.height / font)  # размер шрифта зависит от высоты изображения
     font = ImageFont.truetype("arial.ttf", font_size)  # Убедитесь, что шрифт доступен
     draw = ImageDraw.Draw(txt)
 
@@ -52,7 +52,7 @@ def home(request):
         if form.is_valid():
             image_instance = form.save()
             # Добавляем водяной знак
-            watermarked_image_path = add_watermark(image_instance.image.path, "Ваш Водяной Знак")
+            watermarked_image_path = add_watermark(image_instance.image.path, image_instance.watermark_text, image_instance.font)
             uploaded_image = os.path.basename(watermarked_image_path)  # Получаем имя файла с водяным знаком
             form = ImageUploadForm()  # очистить форму после загрузки
     else:
